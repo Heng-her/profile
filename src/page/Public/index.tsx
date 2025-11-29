@@ -1,16 +1,5 @@
-import {
-  FaGithub,
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-} from "react-icons/fa";
-import {
-  MdSchool,
-  MdWork,
-  MdLocationOn,
-  MdArrowBack,
-  MdEdit,
-} from "react-icons/md";
+import { FaGithub, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
+import { MdSchool, MdWork, MdLocationOn, MdEdit } from "react-icons/md";
 import profileData from "../../data/profile.json";
 import Projects from "../../components/Portfolio";
 import { Helmet } from "react-helmet";
@@ -46,7 +35,7 @@ export default function PublicPage() {
       <div className="min-h-screen bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white">
         {/* Top App Bar */}
         <div className="flex items-center justify-between p-4 sticky top-0 z-20 bg-background-light dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
-          <MdArrowBack className="text-2xl text-[#111418] dark:text-white cursor-pointer" />
+          {/* <ImProfile className="text-2xl text-[#111418] dark:text-white cursor-pointer" /> */}{" "}
           <h2 className="text-xl  flex-1 text-center">សួរស្ដី</h2>
           <button className="p-2 rounded-full bg-transparent text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition">
             <MdEdit className="text-2xl" />
@@ -104,9 +93,9 @@ export default function PublicPage() {
             {/* About */}
             <div>
               <h3 className="text-lg font-bold mb-2">About</h3>
-                <p className="text-[#617589] dark:text-gray-300 px-6 text-center lg:text-left">
-                  {profile.about}
-                </p>
+              <p className="text-[#617589] dark:text-gray-300 px-6 text-center lg:text-left">
+                {profile.about}
+              </p>
               {/* <div className="p-6 bg-background-light dark:bg-background-dark/50 rounded shadow">
               </div> */}
             </div>
@@ -130,7 +119,7 @@ export default function PublicPage() {
             <Projects projects={projects} />
           </div>
         </div>
-        <div className="p-4 sticky bottom-0 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+        <div className="lg:hidden sticky bottom-0 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
           {" "}
           <button className="w-full bg-primary font-bold py-4 rounded-lg shadow-lg shadow-primary/30">
             {" "}
