@@ -11,7 +11,6 @@ export default function PublicPage() {
           src={viteLogo}
           alt="ChitChat Logo"
         />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore temporibus, aliquid molestias iste eaque expedita eum voluptatem harum minus? Officia nam maiores praesentium, laborum rem ut facilis porro quos perspiciatis?
         <div>
           <div className="text-xl font-medium text-black dark:text-white">
             ChitChat
