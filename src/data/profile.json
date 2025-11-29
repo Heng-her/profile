@@ -1,0 +1,41 @@
+{
+  "profile": {
+    "username": "@janedoe",
+    "name": "Jane Doe",
+    "profileImageUrl": "https://lh3.googleusercontent.com/pw/AP1GczO5KKTDCC4VwqdAjWUgDhJrZ3lxj4kym9WWiqthc7Pn66ulP4jsjiqZLqebFf7qR1xobxWxMuhEwwQ6z0UiRG1oIZf1eXLaxoB-vcL0lPGEV-aCxCKluvugLt24Yl1IreMchC4C2vxjPcsDxTnctw_Z=w1290-h1719-s-no-gm",
+    "about": "A passionate UI/UX designer with a knack for creating intuitive and beautiful user experiences. Currently crafting the future of mobile interfaces at Creative Tech Inc."
+  },
+  "basicInfo": [
+    {
+      "icon": "MdSchool",
+      "text": "University of South East Asia (USEA)"
+    },
+    {
+      "icon": "MdWork",
+      "text": "Works at Creative Tech Inc."
+    },
+    {
+      "icon": "MdLocationOn",
+      "text": "Lives in San Francisco, CA"
+    }
+  ],
+  "skills": ["UI/UX Design", "Prototyping", "iOS Development", "Figma", "User Research"],
+  "projects": [
+    {
+      "title": "Music App Redesign",
+      "desc": "A concept for a modern music streaming app.",
+      "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuAMclfpj60un2XBiD0afkkywFuEmAlygg05t3h5q-BVG6BayHefj5eko4zBhh8FNpTcVhOlDvLdB8re2h2U83_aD7jaMwOd8XW8hAStFypYq2c37pJ53sD152H-eIZ_o7RrzL8wkbsB6P-gHuABZ8BRISVwS17mvMYVUNvZCbRaLHz2zwlIW8K2FxJIchV250CtVFgqbYFlUDHlHXhlHMpaHSujoRtuoZTXwKzr5OSqxDUFjkGUXAt8zPYJ0paF5xMNLvQPXB7MntHh"
+    },
+    {
+      "title": "E-commerce Website",
+      "desc": "An online store for a local coffee brand.",
+      "img": "https://lh3.googleusercontent.com/aida-public/AB6AXuBjU4Rz7UX_j5h4LawZ4h5eeHbBcLyfuTVur50B-vGB3t8BZaDh2iFe2PIKn7zzEq5pOrPYRWWhepSKrGgUgNvrsPEGSA7Y2StmkBAWoLUyc3G3OvEzktUKYfQzHfkhEyGNwbCxH-zJci1Os1U41t02jY2CgTBt8n1klHxrGBhNaxDB4AJ6DCUIMKfjZo7ac-ZyWSqYr3C-mctgjGYC33ia2xpReCdayXOXomxLmj43di5Rq9sTwPkjWAjPFIJ412TD0sge7rHqCZWs"
+    }
+  ],
+  "socialLinks": [
+    { "platform": "Github", "url": "#" },
+    { "platform": "Facebook", "url": "#" },
+    { "platform": "Instagram", "url": "#" },
+    { "platform": "Tiktok", "url": "#" }
+  ]
+}
