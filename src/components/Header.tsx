@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import translations from "../../data/translations.json";
-import { getTimeOfDay } from "../../util/translations";
+import translations from "../data/translations.json";
+import { getTimeOfDay } from "../util/translations";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLanguageSharp } from "react-icons/io5";
 import { FaAddressBook } from "react-icons/fa6";
 
 type Lang = keyof typeof translations;
 
-export default function Greeting() {
+export default function Header() {
   const [lang, setLang] = useState<Lang>("en");
   const [open, setOpen] = useState(false);
 
@@ -38,9 +38,9 @@ export default function Greeting() {
   };
 
   return (
-    <div>
+    <>
       {/* HEADER */}
-      <header className="flex items-center justify-between px-4 py-3 sticky top-0  dark:bg-background-dark/90 backdrop-blur-md border-b dark:border-gray-700 z-20">
+      <div className="flex items-center justify-between px-4 py-3 sticky top-0  dark:bg-background-dark/90 backdrop-blur-md border-b dark:border-gray-700 z-20">
         {/* LEFT: Create Profile */}
         <button className="px-4 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
           <FaAddressBook />
@@ -77,13 +77,7 @@ export default function Greeting() {
             </ul>
           )}
         </div>
-      </header>
-
-      {/* GREETING TEXT */}
-      <div className="px-4 py-6">
-        <h1 className="text-3xl font-bold mb-2">{greeting}</h1>
-        <p className="opacity-70">{translations[lang].test}</p>
       </div>
-    </div>
+    </>
   );
 }
