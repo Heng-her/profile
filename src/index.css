@@ -17,7 +17,7 @@
 
 @keyframes marquee {
   from {
-    transform: translateX(30%);
+    transform: translateX(100%);
   }
   to {
     transform: translateX(-300%);

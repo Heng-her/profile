@@ -114,7 +114,7 @@ export default function PublicPage() {
               {skills.map((skill, index) => (
                 <span
                   key={index}
-                  className="marquee-content bg-primary/20 text-primary font-medium px-4 py-2 rounded-full text-sm grid text-nowrap items-center"
+                  className={`bg-primary/20 text-primary font-medium px-4 py-2 rounded-full text-sm grid text-nowrap items-center ${isMobile ? "marquee-content" : ""}`}
                 >
                   {skill.name}
 
