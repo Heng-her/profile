@@ -1,8 +1,8 @@
 {
   "profile": {
-    "username": "@janedoe",
-    "name": "Jane Doe",
-    "profileImageUrl": "https://lh3.googleusercontent.com/pw/AP1GczO5KKTDCC4VwqdAjWUgDhJrZ3lxj4kym9WWiqthc7Pn66ulP4jsjiqZLqebFf7qR1xobxWxMuhEwwQ6z0UiRG1oIZf1eXLaxoB-vcL0lPGEV-aCxCKluvugLt24Yl1IreMchC4C2vxjPcsDxTnctw_Z=w1290-h1719-s-no-gm",
+    "username": "@Crypten",
+    "name": "Her Bunheng",
+    "profileImageUrl": "./profile.jpg",
     "about": "A passionate UI/UX designer with a knack for creating intuitive and beautiful user experiences. Currently crafting the future of mobile interfaces at Creative Tech Inc."
   },
   "basicInfo": [
@@ -12,14 +12,21 @@
     },
     {
       "icon": "MdWork",
-      "text": "Works at Creative Tech Inc."
+      "text": "Works at Nealika"
     },
     {
       "icon": "MdLocationOn",
-      "text": "Lives in San Francisco, CA"
+      "text": "Siem Reap, Cambodia"
     }
   ],
-  "skills": ["UI/UX Design", "Prototyping", "iOS Development", "Figma", "User Research"],
+  "skills": [
+    { "name": "Web App Development", "rate": "★★★★★" },
+    { "name": "Backend Development", "rate": "★★★☆☆" },
+    { "name": "Mobile App Development", "rate": "★★★☆☆" },
+    { "name": "WordPress Development", "rate": "★★★★★" },
+    { "name": "AI Integration", "rate": "★★★★★" },
+    { "name": "Desktop App Development", "rate": "★★☆☆☆" }
+  ],
   "projects": [
     {
       "title": "Music App Redesign",

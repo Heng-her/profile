@@ -3,6 +3,8 @@ import { MdSchool, MdWork, MdLocationOn, MdEdit } from "react-icons/md";
 import profileData from "../../data/profile.json";
 import Projects from "../../components/Portfolio";
 import { Helmet } from "react-helmet";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import { useResponsive } from "../../util/responsive";
 const iconMap = {
   MdSchool: <MdSchool size={28} />,
   MdWork: <MdWork size={28} />,
@@ -22,6 +24,7 @@ const socialIconMap: Record<
 
 export default function PublicPage() {
   const { profile, basicInfo, skills, projects, socialLinks } = profileData;
+  const { isMobile } = useResponsive();
   return (
     <>
       <Helmet>
@@ -61,7 +64,7 @@ export default function PublicPage() {
             </div>
 
             {/* Contact Button */}
-            <button className="w-full lg:w-auto bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition">
+            <button className="w-full lg:w-auto bg-primary font-bold py-3 px-6 rounded-lg transition">
               Sicial Media
             </button>
 
@@ -101,18 +104,34 @@ export default function PublicPage() {
             </div>
 
             {/* Skills */}
-            <div>
-              <h3 className="text-lg font-bold mb-2">Skills</h3>
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="bg-primary/20 text-primary font-medium px-4 py-2 rounded-full text-sm"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+            {/* Skills */}
+            <h3 className="text-lg font-bold">Skills</h3>
+            <div
+              className={
+                isMobile ? "flex overflow-x-auto" : "flex flex-wrap gap-4"
+              }
+            >
+              {skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="marquee-content bg-primary/20 text-primary font-medium px-4 py-2 rounded-full text-sm grid text-nowrap items-center"
+                >
+                  {skill.name}
+
+                  {/* Stars UI */}
+                  <div className="flex text-yellow-500 place-self-center">
+                    {skill.rate
+                      .split("")
+                      .map((char, i) =>
+                        char === "★" ? (
+                          <FaStar key={i} />
+                        ) : (
+                          <FaRegStar key={i} />
+                        )
+                      )}
+                  </div>
+                </span>
+              ))}
             </div>
 
             {/* Portfolio */}

@@ -11,3 +11,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 @import "tailwindcss";
+.marquee-content {
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(30%);
+  }
+  to {
+    transform: translateX(-300%);
+  }
+}
