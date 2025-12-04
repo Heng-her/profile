@@ -109,91 +109,93 @@ const UserProfile = () => {
     );
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-2xl mx-auto min-h-screen">
-        {/* Profile Image and Info */}
-        <div className="flex flex-col items-center pt-4 px-4">
-          <div className="w-36 h-36 rounded-full overflow-hidden mb-4">
-            <img
-              src={profile.profile_image || "/profile2.png"}
-              alt={`${profile.firstname} ${profile.lastname}`}
-              className="w-full h-full object-cover"
-            />
+    <>
+      <div className="min-h-screen">
+        <div className="max-w-2xl mx-auto min-h-screen">
+          {/* Profile Image and Info */}
+          <div className="flex flex-col items-center pt-4 px-4">
+            <div className="w-36 h-36 rounded-full overflow-hidden mb-4">
+              <img
+                src={profile.profile_image || "/profile2.png"}
+                alt={`${profile.firstname} ${profile.lastname}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <h2 className="text-3xl font-bold  mb-1">
+              {profile.firstname} {profile.lastname}
+            </h2>
+
+            <p className="mb-4">@{profile.username}</p>
+
+            <p className="text-center px-6">{profile.bio}</p>
           </div>
 
-          <h2 className="text-3xl font-bold  mb-1">
-            {profile.firstname} {profile.lastname}
-          </h2>
+          {profile.contacts.length > 0 && (
+            <>
+              <div className="px-4 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-2xl font-bold">Contact</h3>
 
-          <p className="mb-4">@{profile.username}</p>
-
-          <p className="text-center px-6">{profile.bio}</p>
-        </div>
-
-        {profile.contacts.length > 0 && (
-          <>
-            <div className="px-4 mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-bold">Contact</h3>
-
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full animate-ping bg-blue-400 opacity-30"></div>
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg">
-                    {profile.view_profile?.view_count}
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-full animate-ping bg-blue-400 opacity-30"></div>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg">
+                      {profile.view_profile?.view_count}
+                    </div>
                   </div>
                 </div>
-              </div>
 
+                <div className="space-y-3">
+                  {profile.contacts.map((contact) => (
+                    <div
+                      key={contact.id}
+                      className=" border border-gray-200 rounded-2xl p-4 flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        {getContactIcon(contact?.type)}
+                        <span className=" text-lg">{contact.value}</span>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard(contact.value)}
+                        className="text-blue-500 p-2"
+                      >
+                        <IoCopyOutline className="text-2xl" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Socials Section */}
+          {profile.social_links.length > 0 && (
+            <div className="px-4 pb-8">
+              <h3 className="text-2xl font-bold  mb-4">Socials</h3>
               <div className="space-y-3">
-                {profile.contacts.map((contact) => (
-                  <div
-                    key={contact.id}
-                    className=" border border-gray-200 rounded-2xl p-4 flex items-center justify-between"
+                {profile.social_links?.map((social) => (
+                  <a
+                    key={social.id}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className=" border border-gray-200 rounded-2xl p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-4">
-                      {getContactIcon(contact?.type)}
-                      <span className=" text-lg">{contact.value}</span>
+                      {getSocialIcon(social.platform)}
+                      <span className=" text-lg capitalize">
+                        {social.platform}
+                      </span>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(contact.value)}
-                      className="text-blue-500 p-2"
-                    >
-                      <IoCopyOutline className="text-2xl" />
-                    </button>
-                  </div>
+                    <FaChevronLeft className="text-gray-400 rotate-180" />
+                  </a>
                 ))}
               </div>
             </div>
-          </>
-        )}
-
-        {/* Socials Section */}
-        {profile.social_links.length > 0 && (
-          <div className="px-4 pb-8">
-            <h3 className="text-2xl font-bold  mb-4">Socials</h3>
-            <div className="space-y-3">
-              {profile.social_links?.map((social) => (
-                <a
-                  key={social.id}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className=" border border-gray-200 rounded-2xl p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-4">
-                    {getSocialIcon(social.platform)}
-                    <span className=" text-lg capitalize">
-                      {social.platform}
-                    </span>
-                  </div>
-                  <FaChevronLeft className="text-gray-400 rotate-180" />
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

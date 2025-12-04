@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { supabase } from "../../service/supabase";
+import { Dialog } from "@headlessui/react";
+import { FaCheckCircle, FaCopy, FaLink } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +17,19 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const [isOpen, setIsOpen] = useState(true);
   const [fieldErrors, setFieldErrors] = useState<any>({});
+  const [checked, setChecked] = useState(false);
+  const username = formData.username.trim();
+  const profileUrl = `${window.location.origin}/${username}`;
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(profileUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,12 +37,13 @@ const Register = () => {
 
   const handleRegister = async (e: any) => {
     e.preventDefault();
+
     setError("");
     setSuccess("");
     setFieldErrors({});
     setLoading(true);
 
-    // Validate password match
+    // Validate password
     if (formData.password !== formData.confirmPassword) {
       setFieldErrors({
         confirmPassword: "Passwords do not match",
@@ -38,7 +53,7 @@ const Register = () => {
     }
 
     try {
-      // 1️⃣ Create user in Supabase Auth
+      // Register user in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -54,36 +69,20 @@ const Register = () => {
       if (authError) throw authError;
       if (!authData.user) throw new Error("No user returned from auth");
 
-      // const auth_id = authData.user.id;
-
-      // 2️⃣ Insert into public.users profile table
-      // const { error: dbError } = await supabase.from("users").insert([
-      //   {
-      //     auth_id,
-      //     username: formData.username,
-      //     email: formData.email,
-      //     firstname: formData.firstname,
-      //     lastname: formData.lastname,
-      //   },
-      // ]);
-
-      // if (dbError) {
-      //   // If profile insert fails → delete auth user to prevent orphan accounts
-      //   await supabase.auth.admin.deleteUser(auth_id);
-      //   throw dbError;
-      // }
-
-      // 3️⃣ Done
-      setSuccess(
-        "Account created successfully! Please check your email to verify."
-      );
+      // Show success modal
+      setSuccess("Account created! Check your email to verify.");
+      setIsOpen(true);
     } catch (err: any) {
       setError(err.message || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
-
+  const router = useNavigate();
+  const handleConfirm = () => {
+    setIsOpen(false);
+    router(profileUrl);
+  };
   return (
     <div className="mt-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -298,6 +297,95 @@ const Register = () => {
           </a>
         </p>
       </div>
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(true)}
+        className="relative z-50"
+      >
+        {/* Overlay */}
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+          aria-hidden="true"
+        />
+
+        {/* Dialog container */}
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full space-y-4">
+            {/* Title */}
+            <Dialog.Title className="flex items-center gap-2 text-xl font-semibold text-green-600">
+              <FaCheckCircle className="text-green-500" size={24} />
+              Register Successful!
+            </Dialog.Title>
+
+            {/* Description */}
+            <Dialog.Description className="text-gray-600 leading-relaxed">
+              Please check your email to verify your account. Without
+              verification, you cannot upload profile picture or access other
+              features.
+            </Dialog.Description>
+
+            {/* Profile link box */}
+            <div className="mt-3 p-3 border rounded-lg bg-gray-50 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-gray-700 overflow-hidden">
+                <FaLink className="text-blue-600 shrink-0" />
+                <span className="truncate">{profileUrl}</span>
+              </div>
+
+              <button
+                onClick={handleCopy}
+                className="ml-2 p-2 rounded hover:bg-gray-200 transition"
+              >
+                {copied ? (
+                  <span className="text-green-600 text-sm font-semibold">
+                    Copied!
+                  </span>
+                ) : (
+                  <FaCopy className="text-gray-600" />
+                )}
+              </button>
+            </div>
+            {/* Privicy and policy */}
+            <p className="text-xs text-gray-500 flex items-start gap-2">
+              {/* Custom checkbox */}
+              <input
+                type="checkbox"
+                id="checkbox"
+                checked={checked}
+                onChange={() => setChecked(!checked)}
+                className="
+    h-4 w-4 rounded border-gray-400 
+    checked:bg-blue-600 checked:border-blue-600
+    focus:ring-blue-500
+  "
+              />
+
+              <label
+                htmlFor="checkbox"
+                className="leading-tight cursor-pointer select-none"
+              >
+                I have read and agree to the privacy policy and terms of
+                service.
+              </label>
+            </p>
+
+            {/* Confirm Button */}
+            <button
+              disabled={!checked}
+              onClick={() => handleConfirm()}
+              className={`
+        w-full mt-4 px-4 py-2 rounded-lg transition
+        ${
+          checked
+            ? "bg-blue-600 text-white hover:bg-blue-700"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        }
+      `}
+            >
+              Confirm
+            </button>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
     </div>
   );
 };

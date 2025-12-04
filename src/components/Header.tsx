@@ -53,7 +53,7 @@ export default function Header() {
         </button>
 
         {/* CENTER TITLE */}
-        <h2 className="text-xl font-bold flex-1 text-center">{greeting}</h2>
+        <h2 className="text-xl font-bold flex-1 khmer-regular text-center">{greeting}</h2>
 
         {/* RIGHT: LANGUAGE DROPDOWN */}
         <div className="relative">
