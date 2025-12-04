@@ -5,6 +5,7 @@ import Projects from "../../components/Portfolio";
 import { Helmet } from "react-helmet";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useResponsive } from "../../util/responsive";
+import Header from "../../components/Header";
 // import Header from "../../components/Header";
 const iconMap = {
   MdSchool: <MdSchool size={28} />,
@@ -36,6 +37,7 @@ export default function PublicPage() {
         />
         <meta property="og:image" content={profile.profileImageUrl} />
       </Helmet>
+      <Header />
       <div className="min-h-screen bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white">
         <div className="py-8 grid grid-cols-1 lg:grid-cols-3">
           {/* Left Sidebar: Profile Info */}

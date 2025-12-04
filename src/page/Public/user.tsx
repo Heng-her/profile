@@ -4,14 +4,18 @@ import {
   FaInstagram,
   FaTiktok,
   FaYoutube,
+  FaTwitter,
+  FaLinkedin,
+  FaGithub,
   FaPhone,
   FaChevronLeft,
 } from "react-icons/fa";
 import { FaTelegram } from "react-icons/fa6";
 import { IoCopyOutline } from "react-icons/io5";
-import { getUserByUsername } from "../../components/auth";
-import { useParams } from "react-router-dom";
+import { getUserByUsername, incrementView } from "../../components/auth";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "../../components/TranslationContext";
+import Header from "../../components/Header";
 interface ViewProfile {
   id: number;
   user_id: string;
@@ -36,7 +40,7 @@ interface SocialLink {
 
 interface ProfileData {
   id: string;
-  auth_id: string;
+  auth_id?: string;
   username: string;
   email: string;
   firstname: string;
@@ -45,7 +49,7 @@ interface ProfileData {
   profile_image: string;
   role: string;
   created_at: string;
-  view_profile: ViewProfile;
+  view_profile: ViewProfile | any;
   contacts: Contact[];
   social_links: SocialLink[];
 }
@@ -55,6 +59,8 @@ const UserProfile = () => {
   const [error, setError] = useState("");
   const { username } = useParams<{ username: string }>();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  // const [showupdate, setShowupdate] = useState(false);
   useEffect(() => {
     async function fetchProfile() {
       try {
@@ -66,26 +72,40 @@ const UserProfile = () => {
     }
     fetchProfile();
   }, [username]);
+  useEffect(() => {
+    if (!profile?.id) return;
 
-  // const formatJoinDate = (dateString: string) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-  // };
+    const key = `viewed_${profile.id}`;
+
+    // if already viewed on this device → stop
+    if (localStorage.getItem(key)) return;
+
+    incrementView(profile.id);
+    localStorage.setItem(key, "true");
+  }, [profile]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
   };
 
   const getSocialIcon = (platform: string) => {
+    const iconClass = "text-2xl";
+
     switch (platform.toLowerCase()) {
       case "facebook":
-        return <FaFacebook className="text-blue-600 text-2xl" />;
+        return <FaFacebook className={`${iconClass} text-blue-600`} />;
       case "instagram":
-        return <FaInstagram className="text-pink-600 text-2xl" />;
+        return <FaInstagram className={`${iconClass} text-pink-600`} />;
       case "tiktok":
-        return <FaTiktok className="text-2xl" />;
+        return <FaTiktok className={`${iconClass} text-black`} />;
       case "youtube":
-        return <FaYoutube className="text-red-600 text-2xl" />;
+        return <FaYoutube className={`${iconClass} text-red-600`} />;
+      case "twitter":
+        return <FaTwitter className={`${iconClass} text-blue-400`} />;
+      case "linkedin":
+        return <FaLinkedin className={`${iconClass} text-blue-700`} />;
+      case "github":
+        return <FaGithub className={`${iconClass}`} />;
       default:
         return null;
     }
@@ -121,7 +141,9 @@ const UserProfile = () => {
 
   return (
     <>
+      <Header showlogin={false} onClick={() => navigate("/update")} />
       <div className="min-h-screen">
+        {/* {showupdate == true && <div>hellos</div>} */}
         <div className="max-w-2xl mx-auto min-h-screen">
           {/* Profile Image and Info */}
           <div className="flex flex-col items-center pt-4 px-4">
@@ -144,9 +166,9 @@ const UserProfile = () => {
 
           {profile.contacts.length > 0 && (
             <>
-              <div className="px-4 mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold khmer-regular">
+              <div className="px-4 mb-6 mt-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold khmer-regular">
                     {/* {translations[lang].contact} */}
                     {t("contact")}
                   </h3>
@@ -154,7 +176,7 @@ const UserProfile = () => {
                   <div className="relative">
                     <div className="absolute inset-0 rounded-full animate-ping bg-blue-400 opacity-30"></div>
                     <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg">
-                      {profile.view_profile?.view_count}
+                      {profile.view_profile?.view_count || "0"}
                     </div>
                   </div>
                 </div>
@@ -185,7 +207,7 @@ const UserProfile = () => {
           {/* Socials Section */}
           {profile.social_links.length > 0 && (
             <div className="px-4 pb-8">
-              <h3 className="text-2xl font-bold khmer-regular mb-4">
+              <h3 className="text-xl font-bold khmer-regular mb-4">
                 {t("socials")}
               </h3>
               <div className="space-y-3">

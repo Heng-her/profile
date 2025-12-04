@@ -13,6 +13,7 @@ CREATE TABLE public.users (
     profile_image   text,
     role            text DEFAULT 'user' CHECK (role IN ('user', 'admin')),
     created_at      timestamp with time zone DEFAULT now()
+    update_at       TIMESTAMP WITH TIME ZONE DEFAULT now();
 );
 -- +++++++++++++++++++++++++++++++++++++++
 
@@ -121,7 +122,11 @@ CREATE POLICY "Block manual view_profile edits"
   USING (false);
 
 
-
+-- ++++++++++++++++++++++++++++++++++++++
+CREATE POLICY "Users can update own profile"
+  ON public.users FOR UPDATE
+  USING (auth.uid() = auth_id);
+-- ++++++++++++++++++++++++++++++++++++++
 
 -- -- Function: increment profile view count    
   CREATE OR REPLACE FUNCTION public.increment_profile_view(target_user_id uuid)

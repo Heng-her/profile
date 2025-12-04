@@ -3,6 +3,7 @@ import { supabase } from "../../service/supabase";
 import { Dialog } from "@headlessui/react";
 import { FaCheckCircle, FaCopy, FaLink } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "../../components/TranslationContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,13 +18,13 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<any>({});
   const [checked, setChecked] = useState(false);
   const username = formData.username.trim();
   const profileUrl = `${window.location.origin}/${username}`;
-
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(profileUrl);
@@ -312,16 +313,21 @@ const Register = () => {
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel className="bg-white rounded-xl p-6 shadow-xl max-w-sm w-full space-y-4">
             {/* Title */}
-            <Dialog.Title className="flex items-center gap-2 text-xl font-semibold text-green-600">
-              <FaCheckCircle className="text-green-500" size={24} />
-              Register Successful!
+            <Dialog.Title>
+              <div className="flex khmer-regular items-center gap-2 text-xl font-semibold text-green-600">
+                <FaCheckCircle
+                  className="text-green-500 khmer-regula"
+                  size={24}
+                />
+                {t("dialog.title")}
+              </div>
             </Dialog.Title>
 
             {/* Description */}
-            <Dialog.Description className="text-gray-600 leading-relaxed">
-              Please check your email to verify your account. Without
-              verification, you cannot upload profile picture or access other
-              features.
+            <Dialog.Description>
+              <p className="text-gray-600 leading-relaxed khmer-regular">
+                {t("dialog.description")}
+              </p>
             </Dialog.Description>
 
             {/* Profile link box */}
@@ -336,8 +342,8 @@ const Register = () => {
                 className="ml-2 p-2 rounded hover:bg-gray-200 transition"
               >
                 {copied ? (
-                  <span className="text-green-600 text-sm font-semibold">
-                    Copied!
+                  <span className="text-green-600 khmer-regular text-sm font-semibold">
+                    {t("dialog.copied")}
                   </span>
                 ) : (
                   <FaCopy className="text-gray-600" />
@@ -361,10 +367,9 @@ const Register = () => {
 
               <label
                 htmlFor="checkbox"
-                className="leading-tight cursor-pointer select-none"
+                className="leading-tight khmer-regular cursor-pointer select-none"
               >
-                I have read and agree to the privacy policy and terms of
-                service.
+                {t("dialog.agreement")}
               </label>
             </p>
 
@@ -373,7 +378,7 @@ const Register = () => {
               disabled={!checked}
               onClick={() => handleConfirm()}
               className={`
-        w-full mt-4 px-4 py-2 rounded-lg transition
+        w-full mt-4 px-4 py-2 rounded-lg transition khmer-regular
         ${
           checked
             ? "bg-blue-600 text-white hover:bg-blue-700"
@@ -381,7 +386,7 @@ const Register = () => {
         }
       `}
             >
-              Confirm
+              {t("dialog.confirm")}
             </button>
           </Dialog.Panel>
         </div>

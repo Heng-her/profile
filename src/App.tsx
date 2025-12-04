@@ -8,12 +8,14 @@ import Verify from "./page/Verify";
 import UserProfile from "./page/Public/user";
 import { Login } from "./page/auth/login";
 import Pagenotfound from "./page/pagenotfound";
+import Update from "./page/update";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<PublicPage />} />
       <Route path="/:username" element={<UserProfile />} />
+      <Route path="/update" element={<Update />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/contact" element={<Contact />} />
