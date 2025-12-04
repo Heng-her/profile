@@ -4,6 +4,7 @@ import { getTimeOfDay } from "../util/translations";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLanguageSharp } from "react-icons/io5";
 import { FaAddressBook } from "react-icons/fa6";
+import { Modalboxlogin } from "./modalboxlogin";
 
 type Lang = keyof typeof translations;
 
@@ -36,13 +37,18 @@ export default function Header() {
     id: "Indonesian",
     ph: "Filipino",
   };
-
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   return (
     <>
       {/* HEADER */}
+
+      <Modalboxlogin isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
       <div className="flex items-center justify-between px-4 py-3 sticky top-0  dark:bg-background-dark/90 backdrop-blur-md border-b dark:border-gray-700 z-20">
         {/* LEFT: Create Profile */}
-        <button className="px-4 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+        <button
+          className="px-4 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+          onClick={() => setIsLoginOpen(true)}
+        >
           <FaAddressBook />
         </button>
 

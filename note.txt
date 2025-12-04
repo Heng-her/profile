@@ -1,0 +1,1 @@
+okay so how I do if I want to create table in supabase for store like personal data, education, work at, current address, social media like facebook, ig, tiktok, youtube ...etc, and contact like phone 1, phone 2, ..etc, telegram, don't for got user_id that have relationship from users id just give me idea
