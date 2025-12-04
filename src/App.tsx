@@ -7,6 +7,7 @@ import Contact from "./page/Public/contact";
 import Verify from "./page/Verify";
 import UserProfile from "./page/Public/user";
 import { Login } from "./page/auth/login";
+import Pagenotfound from "./page/pagenotfound";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/verify" element={<Verify />} />
+      <Route path="/Pagenotfound" element={<Pagenotfound />} />
       <Route
         path="/dashboard"
         element={
@@ -26,7 +28,7 @@ function App() {
         }
       />
       {/* 404 Fallback */}
-      <Route path="*" element={<h1>Page Not Found</h1>} />
+      <Route path="*" element={<Pagenotfound />} />
     </Routes>
   );
 }

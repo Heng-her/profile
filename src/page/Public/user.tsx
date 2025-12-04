@@ -11,6 +11,7 @@ import { FaTelegram } from "react-icons/fa6";
 import { IoCopyOutline } from "react-icons/io5";
 import { getUserByUsername } from "../../components/auth";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "../../components/TranslationContext";
 interface ViewProfile {
   id: number;
   user_id: string;
@@ -53,6 +54,7 @@ const UserProfile = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [error, setError] = useState("");
   const { username } = useParams<{ username: string }>();
+  const { t } = useTranslation();
   useEffect(() => {
     async function fetchProfile() {
       try {
@@ -100,7 +102,16 @@ const UserProfile = () => {
     }
   };
 
-  if (error) return <div className="text-red-500 p-4">{error}</div>;
+  if (error)
+    return (
+      <div className="text-red-500 p-4 text-center place-self-center flex flex-col justify-center items-center">
+        <span>{error}</span>
+        <br />
+        <a className="p-4 py-2 w-24 rounded-sm bg-blue-500 text-white" href="/">
+          Back
+        </a>
+      </div>
+    );
   if (!profile)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -135,7 +146,10 @@ const UserProfile = () => {
             <>
               <div className="px-4 mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold">Contact</h3>
+                  <h3 className="text-2xl font-bold khmer-regular">
+                    {/* {translations[lang].contact} */}
+                    {t("contact")}
+                  </h3>
 
                   <div className="relative">
                     <div className="absolute inset-0 rounded-full animate-ping bg-blue-400 opacity-30"></div>
@@ -171,7 +185,9 @@ const UserProfile = () => {
           {/* Socials Section */}
           {profile.social_links.length > 0 && (
             <div className="px-4 pb-8">
-              <h3 className="text-2xl font-bold  mb-4">Socials</h3>
+              <h3 className="text-2xl font-bold khmer-regular mb-4">
+                {t("socials")}
+              </h3>
               <div className="space-y-3">
                 {profile.social_links?.map((social) => (
                   <a

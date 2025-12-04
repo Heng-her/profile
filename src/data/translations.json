@@ -6,7 +6,15 @@
       "evening": "Good evening",
       "night": "Good night"
     },
-    "test": "This is a test string."
+    "dialog": {
+      "title": "Register Successful!",
+      "description": "Please check your email to verify your account. Without verification, you cannot upload profile picture or access other features.",
+      "copied": "Copied!",
+      "agreement": "I have read and agree to the privacy policy and terms of service.",
+      "confirm": "Confirm"
+    },
+    "contact": "Contact",
+    "socials": "Socials"
   },
   "kh": {
     "welcome": {
@@ -15,7 +23,15 @@
       "evening": "សាយង្គាលសួស្តី",
       "night": "ផឹកអត់"
     },
-    "test": "នេះគឺជាខ្សែអត្ថបទសាកល្បងមួយ។"
+    "dialog": {
+      "title": "ការចុះឈ្មោះបានជោគជ័យ!",
+      "description": "សូមពិនិត្យអ៊ីមែលរបស់អ្នកដើម្បីផ្ទៀងផ្ទាត់គណនី។ បើគ្មានការផ្ទៀងផ្ទាត់ អ្នកមិនអាចបញ្ចូលរូបភាពប្រវត្តិរូប ឬប្រើប្រាស់មុខងារផ្សេងទៀតបានទេ។",
+      "copied": "បានចម្លង!",
+      "agreement": "ខ្ញុំបានអាន និងយល់ព្រមនឹងគោលការណ៍ឯកជនភាព និងលក្ខខណ្ឌសេវាកម្ម។",
+      "confirm": "បញ្ជាក់"
+    },
+    "contact": "ទំនាក់ទំនង",
+    "socials": "បណ្តាញសង្គម"
   },
   "cn": {
     "welcome": {
@@ -24,7 +40,15 @@
       "evening": "晚上好",
       "night": "晚安"
     },
-    "test": "这是一条测试字符串。"
+    "dialog": {
+      "title": "注册成功！",
+      "description": "请检查您的邮箱以验证账号。未完成验证，您将无法上传头像或使用其他功能。",
+      "copied": "已复制！",
+      "agreement": "我已阅读并同意隐私政策和服务条款。",
+      "confirm": "确认"
+    },
+    "contact": "联系方式",
+    "socials": "社交平台"
   },
   "vi": {
     "welcome": {
@@ -33,7 +57,15 @@
       "evening": "Chào buổi tối",
       "night": "Chúc ngủ ngon"
     },
-    "test": "Đây là một chuỗi kiểm tra."
+    "dialog": {
+      "title": "Đăng ký thành công!",
+      "description": "Vui lòng kiểm tra email của bạn để xác minh tài khoản. Nếu không xác minh, bạn sẽ không thể tải ảnh đại diện hoặc sử dụng các tính năng khác.",
+      "copied": "Đã sao chép!",
+      "agreement": "Tôi đã đọc và đồng ý với chính sách quyền riêng tư và điều khoản dịch vụ.",
+      "confirm": "Xác nhận"
+    },
+    "contact": "Liên hệ",
+    "socials": "Mạng xã hội"
   },
   "id": {
     "welcome": {
@@ -42,7 +74,15 @@
       "evening": "Selamat sore",
       "night": "Selamat malam"
     },
-    "test": "Ini adalah string uji."
+    "dialog": {
+      "title": "Pendaftaran Berhasil!",
+      "description": "Silakan periksa email Anda untuk memverifikasi akun. Tanpa verifikasi, Anda tidak dapat mengunggah foto profil atau mengakses fitur lainnya.",
+      "copied": "Tersalin!",
+      "agreement": "Saya telah membaca dan menyetujui kebijakan privasi dan syarat layanan.",
+      "confirm": "Konfirmasi"
+    },
+    "contact": "Kontak",
+    "socials": "Media sosial"
   },
   "ph": {
     "welcome": {
@@ -51,6 +91,14 @@
       "evening": "Magandang gabi",
       "night": "Magandang gabi"
     },
-    "test": "Ito ay isang test string."
+    "dialog": {
+      "title": "Matagumpay ang Pagrehistro!",
+      "description": "Pakisuri ang iyong email upang ma-verify ang iyong account. Kung walang beripikasyon, hindi ka makakapag-upload ng profile picture o makagamit ng ibang features.",
+      "copied": "Nakopya!",
+      "agreement": "Nabasa ko at sumasang-ayon ako sa privacy policy at terms of service.",
+      "confirm": "Kumpirmahin"
+    },
+    "contact": "Contact",
+    "socials": "Socials"
   }
 }
