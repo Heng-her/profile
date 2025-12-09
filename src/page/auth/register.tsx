@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { supabase } from "../../service/supabase";
 import { Dialog } from "@headlessui/react";
@@ -46,7 +47,6 @@ const Register = () => {
     setFieldErrors({});
     setLoading(true);
 
-    // Validate password
     if (formData.password !== formData.confirmPassword) {
       setFieldErrors({
         confirmPassword: "Passwords do not match",
@@ -56,7 +56,6 @@ const Register = () => {
     }
 
     try {
-      // Register user in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -72,7 +71,6 @@ const Register = () => {
       if (authError) throw authError;
       if (!authData.user) throw new Error("No user returned from auth");
 
-      // Show success modal
       setSuccess("Account created! Check your email to verify.");
       setIsOpen(true);
     } catch (err: any) {
@@ -81,15 +79,18 @@ const Register = () => {
       setLoading(false);
     }
   };
+
   const router = useNavigate();
   const handleConfirm = () => {
     setIsOpen(false);
     router(profileUrl);
   };
+
   const [googleLoading, setgoogleLoading] = useState(false);
+  
   const handleGoogleRegister = async () => {
     setError("");
-    setLoading(true);
+    setgoogleLoading(true);
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -102,17 +103,14 @@ const Register = () => {
           },
         },
       });
-      setgoogleLoading(true);
 
       if (error) throw error;
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Google sign-up failed");
-    } finally {
-      setLoading(false);
       setgoogleLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="mt-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
@@ -321,7 +319,7 @@ const Register = () => {
           type="button"
           onClick={handleGoogleRegister}
           disabled={loading || googleLoading}
-          className="w-full mb-4 px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
+          className="w-full mb-4 px-4 py-2 mt-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
         >
           {googleLoading ? (
             <>

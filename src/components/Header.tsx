@@ -1,24 +1,17 @@
 import { useState } from "react";
-import { MdKeyboardArrowDown, MdEditNote } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLanguageSharp } from "react-icons/io5";
-import { Modalboxlogin } from "./modalboxlogin";
 import { useTranslation } from "./TranslationContext";
 import { getTimeOfDay } from "../util/translations";
 import { useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+
 export default function Header() {
   const { t, setLang } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [openLang, setOpenLang] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
 
-  const langNames = {
-    en: "English",
-    kh: "Khmer",
-    cn: "Chinese",
-    vi: "Vietnamese",
-    id: "Indonesian",
-    ph: "Filipino",
-  };
   function getCookie(name: string) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -26,79 +19,134 @@ export default function Header() {
     return null;
   }
 
-  const handleCreateProfile = () => {
-    const token = getCookie("access_token"); // <-- using localStorage
-
-    if (token) {
-      // user already logged in
-      navigate("/update"); // <-- redirect to update page
-    } else {
-      // open login modal
-      setIsLoginOpen(true);
-    }
-  };
+  const token = getCookie("access_token");
   const greeting = t(`welcome.${getTimeOfDay()}`);
 
   return (
-    <>
-      <Modalboxlogin isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
-      <div
-        className="flex items-center justify-between px-4 py-3 sticky top-0 
-        dark:bg-background-dark/90 backdrop-blur-sm z-20"
-      >
-        {/* LEFT: CREATE PROFILE */}
+    <div
+      className="flex items-center justify-between px-4 py-3 sticky top-0 
+      dark:bg-background-dark/90 backdrop-blur-sm z-20"
+    >
+      {/* LEFT: PROFILE MENU BUTTON */}
+      <div className="relative">
         <button
-          onClick={handleCreateProfile}
+          onClick={() => setOpenMenu((prev) => !prev)}
           className="flex items-center gap-2 px-3 py-2 rounded-lg 
-  bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
-  dark:hover:bg-gray-600 transition"
+          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
+          dark:hover:bg-gray-600 transition"
         >
-          <MdEditNote />
+          <FaHome />
           <span className="hidden sm:inline">{t("createProfile")}</span>
+          <MdKeyboardArrowDown
+            className={`transition ${openMenu ? "rotate-180" : ""}`}
+          />
         </button>
 
-        {/* CENTER: GREETING */}
-        <h2 className="text-xl font-bold flex-1 text-center khmer-regular">
-          {greeting}
-        </h2>
-
-        {/* RIGHT: LANGUAGE SELECT */}
-        <div className="relative">
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg 
-            bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
-            dark:hover:bg-gray-600 transition"
+        {openMenu && (
+          <ul
+            className="absolute mt-2 w-40 bg-white dark:bg-gray-800 
+            shadow-lg rounded-lg overflow-hidden animate-fade-in"
           >
-            <IoLanguageSharp />
-            <MdKeyboardArrowDown
-              className={`transition ${open ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          {/* DROPDOWN */}
-          {open && (
-            <ul
-              className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 
-              shadow-lg rounded-lg overflow-hidden animate-fade-in"
-            >
-              {Object.keys(langNames).map((key) => (
+            {/* Logged-in options */}
+            {token && (
+              <>
                 <li
-                  key={key}
-                  onClick={() => {
-                    setLang(key as any);
-                    setOpen(false);
-                  }}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 
-                  dark:hover:bg-gray-700"
+                  onClick={() => navigate("/update")}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
-                  {langNames[key as keyof typeof langNames]}
+                  Update
                 </li>
-              ))}
-            </ul>
-          )}
-        </div>
+                <li
+                  onClick={() => {
+                    document.cookie =
+                      "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    navigate("/");
+                    window.location.reload();
+                  }}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Logout
+                </li>
+              </>
+            )}
+
+            {/* Global menu items */}
+            <li
+              onClick={() => navigate("/")}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              Home
+            </li>
+
+            {/* <li
+              onClick={() => navigate("/about")}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              About
+            </li> */}
+
+            {/* Not logged-in options */}
+            {!token && (
+              <>
+                <li
+                  onClick={() => navigate("/login")}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Login
+                </li>
+
+                <li
+                  onClick={() => navigate("/register")}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Register
+                </li>
+              </>
+            )}
+          </ul>
+        )}
       </div>
-    </>
+
+      {/* CENTER */}
+      <h2 className="text-xl font-bold flex-1 text-center khmer-regular">
+        {greeting}
+      </h2>
+
+      {/* RIGHT: LANGUAGE DROPDOWN */}
+      <div className="relative">
+        <button
+          onClick={() => setOpenLang((prev) => !prev)}
+          className="flex items-center gap-2 px-3 py-2 rounded-lg 
+          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
+          dark:hover:bg-gray-600 transition"
+        >
+          <IoLanguageSharp />
+          <MdKeyboardArrowDown
+            className={`transition ${openLang ? "rotate-180" : ""}`}
+          />
+        </button>
+
+        {openLang && (
+          <ul
+            className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 
+            shadow-lg rounded-lg overflow-hidden animate-fade-in"
+          >
+            {["en", "kh", "cn", "vi", "id", "ph"].map((lang) => (
+              <li
+                key={lang}
+                onClick={() => {
+                  setLang(lang as any);
+                  setOpenLang(false);
+                }}
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100 
+                dark:hover:bg-gray-700"
+              >
+                {lang.toUpperCase()}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   );
 }
