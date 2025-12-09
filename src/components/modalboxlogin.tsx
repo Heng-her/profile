@@ -34,7 +34,11 @@ export function Modalboxlogin({
 
       // Store token
       if (token) {
-        localStorage.setItem("auth_token", token);
+        // Set a cookie named "access_token" with the token, expires in 7 days, secure
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 1); // cookie expires in 1 day
+
+        document.cookie = `access_token=${token}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
       }
 
       // Fetch user profile from public.users table

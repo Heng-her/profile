@@ -4,6 +4,8 @@ import { Dialog } from "@headlessui/react";
 import { FaCheckCircle, FaCopy, FaLink } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../components/TranslationContext";
+import { AiOutlineLoading } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -84,6 +86,34 @@ const Register = () => {
     setIsOpen(false);
     router(profileUrl);
   };
+  const [googleLoading, setgoogleLoading] = useState(false);
+  const handleGoogleRegister = async () => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
+      });
+      setgoogleLoading(true);
+
+      if (error) throw error;
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Google sign-up failed");
+    } finally {
+      setLoading(false);
+      setgoogleLoading(false);
+    }
+  };
+
   return (
     <div className="mt-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -287,7 +317,24 @@ const Register = () => {
             )}
           </button>
         </form>
-
+        <button
+          type="button"
+          onClick={handleGoogleRegister}
+          disabled={loading || googleLoading}
+          className="w-full mb-4 px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
+        >
+          {googleLoading ? (
+            <>
+              <AiOutlineLoading className="animate-spin h-5 w-5" />
+              <span>Signing in with Google...</span>
+            </>
+          ) : (
+            <>
+              <FcGoogle className="w-5 h-5" />
+              <span>Continue with Google</span>
+            </>
+          )}
+        </button>
         <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <a

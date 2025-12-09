@@ -9,6 +9,7 @@ import UserProfile from "./page/Public/user";
 import { Login } from "./page/auth/login";
 import Pagenotfound from "./page/pagenotfound";
 import Update from "./page/update";
+import AuthCallback from "./page/auth/AuthCallback";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/verify" element={<Verify />} />
       <Route path="/Pagenotfound" element={<Pagenotfound />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
       <Route
         path="/dashboard"
         element={

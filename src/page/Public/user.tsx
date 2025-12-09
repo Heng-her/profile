@@ -13,7 +13,7 @@ import {
 import { FaTelegram } from "react-icons/fa6";
 import { IoCopyOutline } from "react-icons/io5";
 import { getUserByUsername, incrementView } from "../../components/auth";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "../../components/TranslationContext";
 import Header from "../../components/Header";
 interface ViewProfile {
@@ -59,7 +59,7 @@ const UserProfile = () => {
   const [error, setError] = useState("");
   const { username } = useParams<{ username: string }>();
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [showupdate, setShowupdate] = useState(false);
   useEffect(() => {
     async function fetchProfile() {
@@ -141,7 +141,8 @@ const UserProfile = () => {
 
   return (
     <>
-      <Header showlogin={false} onClick={() => navigate("/update")} />
+      <Header />
+
       <div className="min-h-screen">
         {/* {showupdate == true && <div>hellos</div>} */}
         <div className="max-w-2xl mx-auto min-h-screen">
