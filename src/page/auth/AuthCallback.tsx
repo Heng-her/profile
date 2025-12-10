@@ -10,11 +10,16 @@ export default function AuthCallback() {
     const handleCallback = async () => {
       try {
         // Get the session
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
+
         if (sessionError) throw sessionError;
         if (!session) {
-          navigate('/login');
+          console.log("Callback URL:", window.location.href);
+
+          navigate("/login");
           return;
         }
 
@@ -32,16 +37,19 @@ export default function AuthCallback() {
         if (profile) {
           // Existing user
           localStorage.setItem("profile", JSON.stringify(profile));
-          
+
           const expires = new Date();
           expires.setDate(expires.getDate() + 1);
-          document.cookie = `access_token=${profile.id}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
-          
+          document.cookie = `access_token=${
+            profile.id
+          }; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+
           navigate(`/${profile.username}`);
         } else {
           // New user - create profile
-          const username = user.email?.split("@")[0] || `user_${user.id.slice(0, 8)}`;
-          
+          const username =
+            user.email?.split("@")[0] || `user_${user.id.slice(0, 8)}`;
+
           const { data: newProfile, error: insertError } = await supabase
             .from("users")
             .insert({
@@ -56,7 +64,8 @@ export default function AuthCallback() {
 
           if (insertError) {
             // Check if username collision
-            if (insertError.code === '23505') { // Unique violation
+            if (insertError.code === "23505") {
+              // Unique violation
               const uniqueUsername = `${username}_${Date.now()}`;
               const { data: retryProfile, error: retryError } = await supabase
                 .from("users")
@@ -71,31 +80,35 @@ export default function AuthCallback() {
                 .single();
 
               if (retryError) throw retryError;
-              
+
               localStorage.setItem("profile", JSON.stringify(retryProfile));
-              
+
               const expires = new Date();
               expires.setDate(expires.getDate() + 1);
-              document.cookie = `access_token=${retryProfile.id}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
-              
+              document.cookie = `access_token=${
+                retryProfile.id
+              }; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+
               navigate(`/${retryProfile.username}`);
             } else {
               throw insertError;
             }
           } else {
             localStorage.setItem("profile", JSON.stringify(newProfile));
-            
+
             const expires = new Date();
             expires.setDate(expires.getDate() + 1);
-            document.cookie = `access_token=${newProfile.id}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
-            
+            document.cookie = `access_token=${
+              newProfile.id
+            }; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Strict`;
+
             navigate(`/${newProfile.username}`);
           }
         }
       } catch (err: any) {
         console.error("Auth callback error:", err);
         setError(err.message || "Authentication failed");
-        setTimeout(() => navigate('/login'), 2000);
+        setTimeout(() => navigate("/login"), 2000);
       }
     };
 

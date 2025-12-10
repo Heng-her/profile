@@ -50,7 +50,7 @@ const Verify = () => {
           setMessage("Password reset complete!");
         }
 
-        setTimeout(() => navigate("/"), 1500);
+        // setTimeout(() => navigate("/"), 1500);
       } catch (err: any) {
         setMessage("Unexpected error: " + err.message);
       }

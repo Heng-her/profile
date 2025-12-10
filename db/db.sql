@@ -146,3 +146,39 @@ BEGIN
   END IF;
 END;
 $$;
+
+
+
+
+-- for create new user 
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+DECLARE
+  base_username text;
+  unique_username text;
+  counter integer := 1;
+BEGIN
+  base_username := lower(split_part(NEW.email, '@', 1));
+  unique_username := base_username;
+
+  -- Loop until a free username is found
+  WHILE EXISTS (SELECT 1 FROM public.users WHERE username = unique_username) LOOP
+    unique_username := base_username || '_' || counter;
+    counter := counter + 1;
+  END LOOP;
+
+  INSERT INTO public.users (
+    auth_id,
+    username,
+    email
+  )
+  VALUES (
+    NEW.id,
+    unique_username,
+    NEW.email
+  );
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
