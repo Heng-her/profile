@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { supabase } from "../../service/supabase";
 import { Dialog } from "@headlessui/react";
@@ -87,7 +86,7 @@ const Register = () => {
   };
 
   const [googleLoading, setgoogleLoading] = useState(false);
-  
+
   const handleGoogleRegister = async () => {
     setError("");
     setgoogleLoading(true);
@@ -110,7 +109,7 @@ const Register = () => {
       setError(err.message || "Google sign-up failed");
       setgoogleLoading(false);
     }
-  };  
+  };
 
   return (
     <div className="mt-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
@@ -161,7 +160,7 @@ const Register = () => {
           </div>
         )}
 
-        <form onSubmit={handleRegister} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-2">
           {/* Username */}
           <div>
             <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300">
@@ -285,54 +284,41 @@ const Register = () => {
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed font-medium"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center">
-                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                Registering...
-              </span>
-            ) : (
-              "Create Account"
-            )}
-          </button>
+          <div className="space-y-4 mt-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed font-medium"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <AiOutlineLoading className="animate-spin h-5 w-5" />
+                  Registering...
+                </span>
+              ) : (
+                "Create Account"
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={handleGoogleRegister}
+              disabled={loading || googleLoading}
+              className="w-full mb-4 px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
+            >
+              {googleLoading ? (
+                <>
+                  <AiOutlineLoading className="animate-spin h-5 w-5" />
+                  <span>Signing in with Google...</span>
+                </>
+              ) : (
+                <>
+                  <FcGoogle className="w-5 h-5" />
+                  <span>Continue with Google</span>
+                </>
+              )}
+            </button>
+          </div>
         </form>
-        <button
-          type="button"
-          onClick={handleGoogleRegister}
-          disabled={loading || googleLoading}
-          className="w-full mb-4 px-4 py-2 mt-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
-        >
-          {googleLoading ? (
-            <>
-              <AiOutlineLoading className="animate-spin h-5 w-5" />
-              <span>Signing in with Google...</span>
-            </>
-          ) : (
-            <>
-              <FcGoogle className="w-5 h-5" />
-              <span>Continue with Google</span>
-            </>
-          )}
-        </button>
         <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <a
