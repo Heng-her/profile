@@ -72,48 +72,17 @@ const UserProfile = () => {
     }
     fetchProfile();
   }, [username]);
-  // useEffect(() => {
-  //   if (!profile?.id) return;
-
-  //   const key = `viewed_${profile.id}`;
-
-  //   // if already viewed on this device → stop
-  //   if (localStorage.getItem(key)) return;
-
-  //   incrementView(profile.id);
-  //   localStorage.setItem(key, "true");
-  // }, [profile]);
   useEffect(() => {
     if (!profile?.id) return;
 
     const key = `viewed_${profile.id}`;
-    const reloadKey = `reload_once_${profile.id}`;
 
-    // Already counted → stop
+    // if already viewed on this device → stop
     if (localStorage.getItem(key)) return;
-
-    try {
-      incrementView(profile.id);
-
-      // Try to store
-      localStorage.setItem(key, "true");
-
-      // Verify storage actually worked
-      const stored = localStorage.getItem(key);
-
-      // If storage failed AND we haven't reloaded yet
-      if (!stored && !sessionStorage.getItem(reloadKey)) {
-        sessionStorage.setItem(reloadKey, "true");
-        window.location.reload();
-      }
-    } catch (e) {
-      // localStorage completely blocked
-      if (!sessionStorage.getItem(reloadKey)) {
-        sessionStorage.setItem(reloadKey, "true");
-        window.location.reload();
-      }
-    }
-  }, [profile?.id]);
+    window.location.replace("")
+    incrementView(profile.id);
+    localStorage.setItem(key, "true");
+  }, [profile]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
