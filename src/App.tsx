@@ -10,6 +10,7 @@ import { Login } from "./page/auth/login";
 import Pagenotfound from "./page/pagenotfound";
 import Update from "./page/update";
 import AuthCallback from "./page/auth/AuthCallback";
+import Chat from "./page/Chat/comment";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/verify" element={<Verify />} />
       <Route path="/Pagenotfound" element={<Pagenotfound />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/chat" element={<Chat />} />
       <Route
         path="/dashboard"
         element={
