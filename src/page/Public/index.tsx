@@ -59,7 +59,7 @@ export default function PublicPage() {
 
             {/* Contact Button */}
             <button className="w-full lg:w-auto bg-primary font-bold py-3 px-6 rounded-lg transition">
-              Sicial Media
+              Social Media
             </button>
 
             {/* Social Media */}
