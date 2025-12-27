@@ -6,6 +6,7 @@ create table users (
     username varchar(50) not null,
     sex char(1),
     age int
+    online boolean
 );
 
 -- ======================================
@@ -24,8 +25,13 @@ create table comments (
     parent_id int references comments(id) on delete cascade,  -- allows nested replies
     user_id int not null references users(id) on delete cascade,
     text text not null,
+    type_id int references comment_types(id) on delete set null,
     created_at timestamp not null default now()
 );
+-- *note alter field type 
+alter table comments
+add column type_id int references comment_types(id) on delete set null;
+
 
 -- ======================================
 -- 4. Comment Reactions Table
@@ -39,7 +45,18 @@ create table comment_reactions (
 );
 
 -- ======================================
--- 5. Insert Sample Data
+-- 5. Create Type of comment
+-- ======================================
+
+create table comment_types (
+    id serial primary key,
+    type text not null unique,          -- e.g., "question", "feedback", etc.
+    total_use_type int not null default 0
+);
+
+
+-- ======================================
+-- 6. Insert Sample Data
 -- ======================================
 
 -- Users

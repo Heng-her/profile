@@ -42,7 +42,7 @@ const CommentItem: React.FC<{
     0
   );
 
-  console.log(totalEmojis);
+  // console.log(totalEmojis);
   return (
     <div className="flex flex-col relative group">
       <article
@@ -139,7 +139,9 @@ const NestedCommentSystem: React.FC<{
   onBack?: () => void;
   onReply?: (commentId: number) => void;
   onSubmit?: (text: string) => void;
-}> = ({ data = sampleData, onBack, onReply, onSubmit }) => {
+  renderActionButton?: () => JSX.Element | undefined;
+
+}> = ({ data = sampleData, onBack, onReply, onSubmit, renderActionButton }) => {
   const commentTree = buildCommentTree(data.comments, data.users);
   const currentUser = data.users[0]; // Assuming first user is current user
 
@@ -159,8 +161,11 @@ const NestedCommentSystem: React.FC<{
           ))}
         </div>
       </main>
-
-      <CommentInput currentUser={currentUser} onSubmit={onSubmit} />
+      <CommentInput
+        currentUser={currentUser}
+        onSubmit={onSubmit}
+        renderActionButton={renderActionButton}
+      />
     </div>
   );
 };

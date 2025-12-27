@@ -1,5 +1,5 @@
 import { MdSend, MdSentimentSatisfied } from "react-icons/md";
-import { Avatar } from "./Avatar";
+// import { Avatar } from "./Avatar";
 import { useState } from "react";
 import { User } from "../../types/comment";
 
@@ -7,7 +7,9 @@ import { User } from "../../types/comment";
 const CommentInput: React.FC<{
   currentUser?: User;
   onSubmit?: (text: string) => void;
-}> = ({ currentUser, onSubmit }) => {
+  renderActionButton?: () => JSX.Element | undefined;
+
+}> = ({ onSubmit, renderActionButton }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = () => {
@@ -26,8 +28,9 @@ const CommentInput: React.FC<{
 
   return (
     <footer className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-4 py-3 sticky bottom-0 w-full z-30 shadow-[0_-8px_20px_-5px_rgba(0,0,0,0.05)]">
-      <div className="flex items-end gap-3 max-w-3xl mx-auto">
-        {currentUser && <Avatar user={currentUser} size="sm" />}
+      <div className="flex items-center gap-3 max-w-3xl mx-auto">
+        {/* {currentUser && <Avatar user={currentUser} size="sm" />} */}
+        <div>{renderActionButton && renderActionButton()}</div>
 
         <div className="flex-1 bg-slate-50 dark:bg-slate-700/50 rounded-[20px] flex items-center px-4 py-2 min-h-11 border border-slate-200 dark:border-slate-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/10 transition-all">
           <input
