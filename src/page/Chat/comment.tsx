@@ -8,13 +8,21 @@ import { useEffect, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { gradients } from "../../assets/style";
 // import CircularRadio from "../../components/circleselect";
-import CircularRadioPopup from "../../components/circleselect";
+import CircularMenuPopup from "../../components/circleselect";
+import { useNavigate } from "react-router-dom";
+const ROUTE_MAP: Record<string, string> = {
+  Home: "/",
+  Settings: "/settings",
+  About: "/about",
+  Support: "/support",
+};
 
 export default function Chat() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"register" | "update">("register");
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<{
     id: string;
     username: string;
@@ -200,10 +208,6 @@ export default function Chat() {
     }
   };
 
-  // const openModal = (mode: "register" | "update") => {
-  //   setModalMode(mode);
-  //   setIsModalOpen(true);
-  // };
   const index = currentUser?.id
     ? parseInt(currentUser.id, 36) % gradients.length // base36 converts alphanumeric string to number
     : 0;
@@ -213,9 +217,25 @@ export default function Chat() {
     setIsOpen(true); // This opens the Circular Dial
     setModalMode(mode); // Set the default mode
   };
-  const handleConfirmFromDial = () => {
-    setIsOpen(false); // Close dial
-    setIsModalOpen(true); // Open the actual RegisterForm modal
+  const handleConfirmFromDial = (selection: string) => {
+    setIsOpen(false);
+
+    // Route-based navigation
+    if (ROUTE_MAP[selection]) {
+      navigate(ROUTE_MAP[selection]);
+      return;
+    }
+
+    // Auth-based actions
+    if (selection === "Register") {
+      setModalMode("register");
+      setIsModalOpen(true);
+    }
+
+    if (selection === "Update") {
+      setModalMode("update");
+      setIsModalOpen(true);
+    }
   };
   // Decide which button to show
   const renderActionButton = () => {
@@ -245,12 +265,13 @@ export default function Chat() {
   return (
     <>
       {isOpen && (
-        <CircularRadioPopup
+        <CircularMenuPopup
+          isLoggedIn={isLoggedIn}
           onClose={() => setIsOpen(false)}
-          isLoggedIn
           onConfirm={handleConfirmFromDial}
         />
       )}
+
       <NestedCommentSystem renderActionButton={renderActionButton} />
 
       {/* <div className="flex gap-4 mt-4">{renderActionButton()}</div> */}
