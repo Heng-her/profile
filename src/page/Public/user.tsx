@@ -79,7 +79,6 @@ const UserProfile = () => {
 
     // if already viewed on this device → stop
     if (localStorage.getItem(key)) return;
-    window.location.replace("")
     incrementView(profile.id);
     localStorage.setItem(key, "true");
   }, [profile]);

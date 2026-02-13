@@ -12,8 +12,8 @@ CREATE TABLE public.users (
     bio             text,
     profile_image   text,
     role            text DEFAULT 'user' CHECK (role IN ('user', 'admin')),
-    created_at      timestamp with time zone DEFAULT now()
-    update_at       TIMESTAMP WITH TIME ZONE DEFAULT now();
+    created_at      timestamp with time zone DEFAULT now(),
+    updated_at       TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 -- +++++++++++++++++++++++++++++++++++++++
 
@@ -55,30 +55,6 @@ CREATE TABLE public.social_links (
 
 
 -- +++++++++++++++++++++++++++++++++++++++
-
--- Allow your app to read auth.users (needed for RLS)
-GRANT USAGE ON SCHEMA auth TO authenticated;
-GRANT SELECT ON TABLE auth.users TO authenticated;
-
--- Function: sync new auth user → public.users
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO public.users (
-    auth_id,
-    username,
-    email
-  )
-  VALUES (
-    NEW.id,
-    -- Default username: email prefix (e.g., "john" from "john@example.com")
-    -- Frontend can update it later
-    LOWER(SPLIT_PART(NEW.email, '@', 1)),
-    NEW.email
-  );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- +++++++++++++++++++++++++++++++++++++++
 
@@ -122,10 +98,6 @@ CREATE POLICY "Block manual view_profile edits"
   USING (false);
 
 
--- ++++++++++++++++++++++++++++++++++++++
-CREATE POLICY "Users can update own profile"
-  ON public.users FOR UPDATE
-  USING (auth.uid() = auth_id);
 -- ++++++++++++++++++++++++++++++++++++++
 
 -- -- Function: increment profile view count    

@@ -3,13 +3,14 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
-// import Header from "./components/Header";
 import { TranslationProvider } from "./components/TranslationContext";
-// const hiddenRoutes = ["/login", "/register"];
+import RouteTracker from "./RouteTracker"; // Import the new RouteTracker component
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <TranslationProvider>
+        <RouteTracker />
         {/* {!hiddenRoutes.includes(window.location.pathname) && <Header />} */}
         <App />
       </TranslationProvider>

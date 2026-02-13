@@ -135,6 +135,7 @@ export default function Header() {
               <li
                 key={lang}
                 onClick={() => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   setLang(lang as any);
                   setOpenLang(false);
                 }}
